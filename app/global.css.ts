@@ -22,7 +22,9 @@ export const AppWrapper = style({
 })
 
 export const SidebarWrapper = style({
-    overflow: "hidden"
+    width: "250px",
+    height: "100%",
+    overflow: "hidden",
 })
 
 export const OutletWrapper = style({

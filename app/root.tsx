@@ -7,6 +7,8 @@ import {
     isRouteErrorResponse,
 } from "react-router"
 
+import Sidebar from "@/common/guideline/Sidebar"
+
 import type { Route } from "./+types/root"
 import Providers from "./Providers"
 import FlexWrapper from "./common/primitives/FlexWrapper"
@@ -45,15 +47,9 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
     return (
-        <FlexWrapper
-            direction="row"
-            align="stretch"
-            justify="stretch"
-            flex="0 1 auto"
-            className={AppWrapper}
-        >
+        <FlexWrapper direction="row" align="stretch" className={AppWrapper}>
             <FlexWrapper direction="column" className={SidebarWrapper}>
-
+                <Sidebar />
             </FlexWrapper>
             <FlexWrapper
                 direction="column"
