@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React, { useEffect } from "react"
 
 import { QueryClient } from "@tanstack/react-query"
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client"
@@ -25,11 +25,7 @@ export const queryClient = new QueryClient({
 function ThemeProvider({ children }: { children: React.ReactNode }) {
     const { displayedTheme } = useThemeStore()
 
-    const extractedTheme = useMemo(() => {
-        return themes[displayedTheme]
-    }, [displayedTheme])
-
-    return <div className={extractedTheme}>{children}</div>
+    return <div className={themes[displayedTheme]}>{children}</div>
 }
 
 function Providers({ children }: { children: React.ReactNode }) {

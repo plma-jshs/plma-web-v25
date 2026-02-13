@@ -21,6 +21,10 @@ export const AppWrapper = style({
     overflow: "hidden",
 })
 
+export const SidebarWrapper = style({
+    overflow: "hidden"
+})
+
 export const OutletWrapper = style({
     overflow: "auto",
     scrollbarWidth: "none",

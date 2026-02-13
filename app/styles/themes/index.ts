@@ -1,15 +1,27 @@
-import { getColorFromNested } from "../colors/primitives"
+import { type NestedColors, getColorFromNested } from "../colors/primitives"
 import { type NestedThemeType, type ThemeKeys, type ThemeType } from "./_base"
 import { DarkTheme } from "./dark"
 import { LightTheme } from "./light"
 
-function extractColors<T extends Object>(obj: T): T {
-    Object.entries(obj).forEach(([key, value]) => {
-        if (typeof value === "object") {
-            obj[key as keyof T] = extractColors(value)
-        } else getColorFromNested(value)
+function extractColors<T>(obj: T): T {
+    if (obj === null || typeof obj !== "object") return obj
+
+    const resolved: Record<string, unknown> = (Array.isArray(obj) ? [] : {}) as Record<
+        string,
+        unknown
+    >
+
+    Object.entries(obj as Record<string, unknown>).forEach(([key, value]) => {
+        if (value !== null && typeof value === "object") {
+            resolved[key] = extractColors(value)
+        } else if (typeof value === "string") {
+            resolved[key] = getColorFromNested(value as NestedColors)
+        } else {
+            resolved[key] = value
+        }
     })
-    return obj
+
+    return resolved as T
 }
 
 function colorResolver(theme: NestedThemeType): ThemeType {

@@ -10,7 +10,7 @@ import {
 import type { Route } from "./+types/root"
 import Providers from "./Providers"
 import FlexWrapper from "./common/primitives/FlexWrapper"
-import { AppWrapper, OutletWrapper } from "./global.css"
+import { AppWrapper, OutletWrapper, SidebarWrapper } from "./global.css"
 
 export const links: Route.LinksFunction = () => [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -46,12 +46,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
     return (
         <FlexWrapper
-            direction="column"
+            direction="row"
             align="stretch"
             justify="stretch"
             flex="0 1 auto"
             className={AppWrapper}
         >
+            <FlexWrapper direction="column" className={SidebarWrapper}>
+
+            </FlexWrapper>
             <FlexWrapper
                 direction="column"
                 align="stretch"

@@ -10,7 +10,7 @@ export const DarkTheme = {
         Text: {
             Default: "carbonBlack.600",
             Dark: "carbonBlack.800",
-            Light: "carbonBlack.100",
+            Light: "turquoise.500",
         },
     },
 } as const satisfies NestedThemeType
