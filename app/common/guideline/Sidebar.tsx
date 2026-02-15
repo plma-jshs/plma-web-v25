@@ -10,6 +10,7 @@ function Sidebar() {
             padding="medium"
             gap="medium"
             align="stretch"
+            flex="1 1 auto"
             style={{ background: "#343a40", overflow: "hidden" }}
         >
             <FlexWrapper direction="column" gap="medium">

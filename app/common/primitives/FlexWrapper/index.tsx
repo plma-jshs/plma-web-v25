@@ -12,7 +12,6 @@ interface FlexWrapperProps
         Partial<Omit<Sprinkles, (typeof requiredProps)[number]>> {
     children?: React.ReactNode
     flex?: string
-    className?: string
 }
 
 function FlexWrapper({
@@ -24,6 +23,7 @@ function FlexWrapper({
     padding = "none",
     flex = "0 0 auto",
     className = "",
+    style,
     ...rest
 }: FlexWrapperProps) {
     return (
@@ -41,7 +41,7 @@ function FlexWrapper({
             )}
             style={{
                 ...assignInlineVars({ [flexProperty]: flex }),
-                ...(rest.style as React.CSSProperties),
+                ...(style as React.CSSProperties),
             }}
             {...rest}
         >

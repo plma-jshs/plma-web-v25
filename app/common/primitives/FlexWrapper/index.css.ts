@@ -22,12 +22,15 @@ const properties = defineProperties({
             none: 0,
             small: "4px",
             medium: "8px",
-            large: "16px",
+            large: "12px",
+            larger: "16px",
         },
         padding: {
             none: 0,
-            small: "8px",
-            medium: "16px",
+            small: "4px",
+            medium: "8px",
+            large: "12px",
+            larger: "16px",
         },
     },
     shorthands: {

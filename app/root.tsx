@@ -11,6 +11,7 @@ import Sidebar from "@/common/guideline/Sidebar"
 
 import type { Route } from "./+types/root"
 import Providers from "./Providers"
+import Header from "./common/guideline/Header"
 import FlexWrapper from "./common/primitives/FlexWrapper"
 import { AppWrapper, OutletWrapper, SidebarWrapper } from "./global.css"
 
@@ -62,7 +63,15 @@ export default function App() {
                 flex="1 1 auto"
                 className={OutletWrapper}
             >
-                <Outlet />
+                <Header />
+                <FlexWrapper
+                    direction="column"
+                    padding="medium"
+                    gap="medium"
+                    align="stretch"
+                >
+                    <Outlet />
+                </FlexWrapper>
             </FlexWrapper>
         </FlexWrapper>
     )
