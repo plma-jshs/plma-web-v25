@@ -48,7 +48,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
     return (
         <FlexWrapper direction="row" align="stretch" className={AppWrapper}>
-            <FlexWrapper direction="column" className={SidebarWrapper}>
+            <FlexWrapper
+                direction="column"
+                align="stretch"
+                flex="1 1 auto"
+                className={SidebarWrapper}
+            >
                 <Sidebar />
             </FlexWrapper>
             <FlexWrapper

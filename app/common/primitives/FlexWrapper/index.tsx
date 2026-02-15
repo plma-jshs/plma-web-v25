@@ -22,7 +22,7 @@ function FlexWrapper({
     justify = "flex-start",
     align = "flex-start",
     padding = "none",
-    flex = "",
+    flex = "0 0 auto",
     className = "",
     ...rest
 }: FlexWrapperProps) {
@@ -39,7 +39,10 @@ function FlexWrapper({
                 }),
                 className,
             )}
-            style={assignInlineVars({ [flexProperty]: flex })}
+            style={{
+                ...assignInlineVars({ [flexProperty]: flex }),
+                ...(rest.style as React.CSSProperties),
+            }}
             {...rest}
         >
             {children}
