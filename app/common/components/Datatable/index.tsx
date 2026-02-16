@@ -1,8 +1,9 @@
-import { memo, useState } from "react"
+import { type JSX, memo, useState } from "react"
 
 import {
     type ColumnDef,
     type SortingState,
+    type TableOptions,
     flexRender,
     getCoreRowModel,
     getSortedRowModel,
@@ -12,6 +13,7 @@ import { MoveDown, MoveUp } from "lucide-react"
 
 import FlexWrapper from "@/common/primitives/FlexWrapper"
 import Icon from "@/common/primitives/Icon"
+import Typography from "@/common/primitives/Typography"
 
 import {
     bodyCellStyle,
@@ -22,15 +24,25 @@ import {
     tableStyle,
 } from "./index.css"
 
-interface DatatableProps<T> {
+interface DatatableProps<T> extends Omit<
+    TableOptions<T>,
+    "data" | "columns" | "getCoreRowModel" | "getSortedRowModel"
+> {
     columns: ColumnDef<T, any>[]
     data: T[]
+    defaultSorting?: SortingState
 }
 
-function Datatable<T>({ columns, data }: DatatableProps<T>) {
-    const [sorting, setSorting] = useState<SortingState>([])
+function Datatable<T>({
+    columns,
+    data,
+    defaultSorting = [],
+    ...tableOptions
+}: DatatableProps<T>) {
+    const [sorting, setSorting] = useState<SortingState>(defaultSorting)
 
     const table = useReactTable({
+        ...tableOptions,
         data,
         columns,
         state: { sorting },
@@ -71,10 +83,23 @@ function Datatable<T>({ columns, data }: DatatableProps<T>) {
                                             align="center"
                                             flex="1 1 auto"
                                         >
-                                            {flexRender(
-                                                header.column.columnDef.header,
-                                                header.getContext(),
-                                            )}
+                                            {(() => {
+                                                const content = flexRender(
+                                                    header.column.columnDef.header,
+                                                    header.getContext(),
+                                                )
+
+                                                return typeof content === "string" ? (
+                                                    <Typography
+                                                        font="medium-bold"
+                                                        color="Default"
+                                                    >
+                                                        {content}
+                                                    </Typography>
+                                                ) : (
+                                                    content
+                                                )
+                                            })()}
                                         </FlexWrapper>
                                         {header.column.columnDef.meta
                                             ?.disableOrder ? null : (
@@ -119,10 +144,25 @@ function Datatable<T>({ columns, data }: DatatableProps<T>) {
                                         align="center"
                                         padding="large"
                                     >
-                                        {flexRender(
-                                            cell.column.columnDef.cell,
-                                            cell.getContext(),
-                                        )}
+                                        {(() => {
+                                            const value = cell.getValue()
+                                            const content = flexRender(
+                                                cell.column.columnDef.cell,
+                                                cell.getContext(),
+                                            )
+
+                                            return typeof value === "string" ||
+                                                typeof value === "number" ? (
+                                                <Typography
+                                                    font="medium-regular"
+                                                    color="Default"
+                                                >
+                                                    {String(value)}
+                                                </Typography>
+                                            ) : (
+                                                content
+                                            )
+                                        })()}
                                     </FlexWrapper>
                                 </td>
                             ))}
@@ -134,6 +174,8 @@ function Datatable<T>({ columns, data }: DatatableProps<T>) {
     )
 }
 
-const MemoizedDatatable = memo(Datatable)
+const MemoizedDatatable = memo(Datatable, (prevProps, nextProps) => {
+    return prevProps.data === nextProps.data && prevProps.columns === nextProps.columns
+}) as <T>(props: DatatableProps<T>) => JSX.Element
 
 export default MemoizedDatatable
