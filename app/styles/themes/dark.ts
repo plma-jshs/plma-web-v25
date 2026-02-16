@@ -1,10 +1,16 @@
-import { type ThemeType } from "./_base"
+import { fontMap } from "../fonts"
+import { type NestedThemeType } from "./_base"
 
 export const DarkTheme = {
-    fonts: "'Inter', sans-serif",
+    fonts: fontMap,
     colors: {
         Background: {
-            Page: "turquoise.100",
+            Page: "turquoise.300",
+        },
+        Text: {
+            Default: "carbonBlack.600",
+            Dark: "carbonBlack.800",
+            Light: "turquoise.500",
         },
     },
-} as const satisfies ThemeType
+} as const satisfies NestedThemeType

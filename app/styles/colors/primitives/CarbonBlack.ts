@@ -1,14 +1,10 @@
-import { type Color } from "./_base"
+import { paletteGenerator } from "./_base"
 
-export const CarbonBlack = {
-    50: "#F1F2F3",
-    100: "#E4E5E7",
-    200: "#C9CBCF",
-    300: "#AEB1B7",
-    400: "#93979F",
-    500: "#787D87",
-    600: "#60646C",
-    700: "#484B51",
-    800: "#303236",
-    900: "#111827",
-} as const satisfies Color
+const shadeScales = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900] as const
+
+export const CarbonBlack = paletteGenerator({
+    light: 0.58,
+    chroma: 0.0164,
+    hue: 264.44,
+    steps: [...shadeScales],
+})
