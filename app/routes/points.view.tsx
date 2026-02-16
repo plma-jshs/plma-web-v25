@@ -3,7 +3,7 @@ import { useState } from "react"
 import { createColumnHelper } from "@tanstack/react-table"
 
 import Card from "@/common/components/Card"
-import Datatable from "@/common/components/Datatable"
+import Datatable from "@/common/components/datatable/Datatable"
 import FlexWrapper from "@/common/primitives/FlexWrapper"
 import Typography from "@/common/primitives/Typography"
 
