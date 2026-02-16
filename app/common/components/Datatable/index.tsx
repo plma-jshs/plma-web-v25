@@ -6,6 +6,7 @@ import {
     type TableOptions,
     flexRender,
     getCoreRowModel,
+    getPaginationRowModel,
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
@@ -49,6 +50,7 @@ function Datatable<T>({
         onSortingChange: setSorting,
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
+        getPaginationRowModel: getPaginationRowModel(),
     })
 
     function handleHeaderCellClick(columnId: string) {
@@ -150,6 +152,8 @@ function Datatable<T>({
                                                 cell.column.columnDef.cell,
                                                 cell.getContext(),
                                             )
+
+                                            if (cell.column.columnDef.cell) return content
 
                                             return typeof value === "string" ||
                                                 typeof value === "number" ? (

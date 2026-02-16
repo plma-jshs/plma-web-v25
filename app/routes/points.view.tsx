@@ -28,7 +28,7 @@ function PointsView() {
             cell: ({ getValue }) => {
                 const value = getValue()
                 return (
-                    <Typography font="medium-bold" color="Default">
+                    <Typography font="large-bold" color="Default">
                         {String(value)}
                     </Typography>
                 )
