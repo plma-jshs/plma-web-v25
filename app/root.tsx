@@ -7,8 +7,13 @@ import {
     isRouteErrorResponse,
 } from "react-router"
 
+import Sidebar from "@/common/guideline/Sidebar"
+
 import type { Route } from "./+types/root"
 import Providers from "./Providers"
+import Header from "./common/guideline/Header"
+import FlexWrapper from "./common/primitives/FlexWrapper"
+import { AppWrapper, OutletWrapper, SidebarWrapper } from "./global.css"
 
 export const links: Route.LinksFunction = () => [
     { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -42,7 +47,34 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-    return <Outlet />
+    return (
+        <FlexWrapper direction="row" align="stretch" className={AppWrapper}>
+            <FlexWrapper
+                direction="column"
+                align="stretch"
+                flex="1 1 auto"
+                className={SidebarWrapper}
+            >
+                <Sidebar />
+            </FlexWrapper>
+            <FlexWrapper
+                direction="column"
+                align="stretch"
+                flex="1 1 auto"
+                className={OutletWrapper}
+            >
+                <Header />
+                <FlexWrapper
+                    direction="column"
+                    padding="medium"
+                    gap="medium"
+                    align="stretch"
+                >
+                    <Outlet />
+                </FlexWrapper>
+            </FlexWrapper>
+        </FlexWrapper>
+    )
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
@@ -56,17 +88,17 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
             error.status === 404
                 ? "The requested page could not be found."
                 : error.statusText || details
-    } else if (import.meta.env.DEV && error && error instanceof Error) {
+    } else if (error && error instanceof Error) {
         details = error.message
         stack = error.stack
     }
 
     return (
-        <main className="pt-16 p-4 container mx-auto">
+        <main>
             <h1>{message}</h1>
             <p>{details}</p>
             {stack && (
-                <pre className="w-full p-4 overflow-x-auto">
+                <pre>
                     <code>{stack}</code>
                 </pre>
             )}
