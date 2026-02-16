@@ -5,7 +5,7 @@ import { CardHeaderStyle, CardStyle } from "./index.css"
 
 interface CardProps {
     title?: string
-    children: React.ReactNode
+    children?: React.ReactNode
 }
 
 function Card({ title, children }: CardProps) {
