@@ -1,7 +1,12 @@
+import { useEffect } from "react"
+
+import { useLocation } from "react-router"
+
 import Line from "@/common/components/Line"
 import FlexWrapper from "@/common/primitives/FlexWrapper"
 import Typography from "@/common/primitives/Typography"
-import TabGroup from "@/features/Sidebar/TabGroup"
+import TabField from "@/features/Sidebar/sections/TabField"
+import { sidebarConfig } from "@/libs/sidebar/sidebar-config"
 
 function Sidebar() {
     return (
@@ -22,9 +27,16 @@ function Sidebar() {
             <FlexWrapper
                 direction="column"
                 align="stretch"
-                style={{ overflow: "auto", scrollbarWidth: "none" }}
+                gap="larger"
+                style={{ overflow: "auto", scrollbarWidth: "none", paddingBlock: "12px" }}
             >
-                <TabGroup legend="Tab Group 1" />
+                {sidebarConfig.tabFields.map((tabField, index) => (
+                    <TabField
+                        key={index}
+                        legend={tabField.legend}
+                        tabGroups={tabField.tabGroups}
+                    />
+                ))}
             </FlexWrapper>
         </FlexWrapper>
     )

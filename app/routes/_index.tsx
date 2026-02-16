@@ -4,7 +4,7 @@ import Typography from "@/common/primitives/Typography"
 
 function Main() {
     return (
-        <Card title="Title">
+        <Card title="내 상벌점">
             <Typography font="large-bold" color="Default">
                 Main Content
             </Typography>

@@ -12,7 +12,7 @@ function Card({ title, children }: CardProps) {
     return (
         <FlexWrapper direction="column" align="stretch" className={CardStyle}>
             <FlexWrapper direction="row" padding="large" className={CardHeaderStyle}>
-                <Typography font="medium-bold" color="Default">
+                <Typography font="medium-regular" color="Default">
                     {title}
                 </Typography>
             </FlexWrapper>

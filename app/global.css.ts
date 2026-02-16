@@ -23,6 +23,7 @@ export const AppWrapper = style({
 
 export const SidebarWrapper = style({
     maxWidth: "250px",
+    minWidth: "250px",
     height: "100%",
     overflow: "hidden",
 })

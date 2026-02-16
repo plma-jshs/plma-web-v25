@@ -23,7 +23,7 @@ function FlexWrapper({
     padding = "none",
     flex = "0 0 auto",
     className = "",
-    style,
+    style = {},
     ...rest
 }: FlexWrapperProps) {
     return (
