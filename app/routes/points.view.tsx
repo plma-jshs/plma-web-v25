@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-import { type ColumnDef, createColumnHelper } from "@tanstack/react-table"
+import { createColumnHelper } from "@tanstack/react-table"
 
 import Card from "@/common/components/Card"
 import Datatable from "@/common/components/Datatable"
@@ -28,10 +28,13 @@ function PointsView() {
             cell: ({ getValue }) => {
                 const value = getValue()
                 return (
-                    <Typography font="large-bold" color="Default">
+                    <Typography font="medium-bold" color="Default">
                         {String(value)}
                     </Typography>
                 )
+            },
+            meta: {
+                isCustomCell: true,
             },
         }),
         columnHelper.accessor("grade", {
