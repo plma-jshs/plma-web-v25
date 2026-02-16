@@ -7,8 +7,11 @@ import {
     isRouteErrorResponse,
 } from "react-router"
 
+import Sidebar from "@/common/guideline/Sidebar"
+
 import type { Route } from "./+types/root"
 import Providers from "./Providers"
+import Header from "./common/guideline/Header"
 import FlexWrapper from "./common/primitives/FlexWrapper"
 import { AppWrapper, OutletWrapper, SidebarWrapper } from "./global.css"
 
@@ -45,15 +48,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 
 export default function App() {
     return (
-        <FlexWrapper
-            direction="row"
-            align="stretch"
-            justify="stretch"
-            flex="0 1 auto"
-            className={AppWrapper}
-        >
-            <FlexWrapper direction="column" className={SidebarWrapper}>
-
+        <FlexWrapper direction="row" align="stretch" className={AppWrapper}>
+            <FlexWrapper
+                direction="column"
+                align="stretch"
+                flex="1 1 auto"
+                className={SidebarWrapper}
+            >
+                <Sidebar />
             </FlexWrapper>
             <FlexWrapper
                 direction="column"
@@ -61,7 +63,15 @@ export default function App() {
                 flex="1 1 auto"
                 className={OutletWrapper}
             >
-                <Outlet />
+                <Header />
+                <FlexWrapper
+                    direction="column"
+                    padding="medium"
+                    gap="medium"
+                    align="stretch"
+                >
+                    <Outlet />
+                </FlexWrapper>
             </FlexWrapper>
         </FlexWrapper>
     )
