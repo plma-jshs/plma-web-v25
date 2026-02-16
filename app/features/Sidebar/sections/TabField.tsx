@@ -19,7 +19,7 @@ function TabField({ legend, tabGroups }: TabFieldProps) {
                 </FlexWrapper>
             ) : null}
 
-            <FlexWrapper direction="column" align="stretch">
+            <FlexWrapper direction="column" align="stretch" gap="small">
                 {tabGroups.map((tabGroup, index) => (
                     <TabGroup key={index} header={tabGroup.header} body={tabGroup.body} />
                 ))}

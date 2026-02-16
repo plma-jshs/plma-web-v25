@@ -34,7 +34,7 @@ function TabGroup({ header, body }: TabGroupProps) {
     useEffect(() => {}, [location.pathname])
 
     return (
-        <FlexWrapper direction="column" align="stretch" gap="none">
+        <FlexWrapper direction="column" align="stretch">
             <Tab
                 icon={header.icon}
                 content={header.content}
@@ -44,24 +44,30 @@ function TabGroup({ header, body }: TabGroupProps) {
                 isHighlighted={body.some((tab) => tab.route === location.pathname)}
                 handleClick={handleClick}
             />
-            <div className={tabGroupStyle({ isOpen })} style={{ paddingTop: "4px" }}>
+            <div className={tabGroupStyle({ isOpen })}>
                 <FlexWrapper
                     direction="column"
                     align="stretch"
-                    gap="small"
                     style={{ overflow: "hidden" }}
                 >
-                    {body.map((tab, tabIndex) => (
-                        <Tab
-                            key={tabIndex}
-                            icon={tab.icon}
-                            content={tab.content}
-                            route={tab.route}
-                            type="body"
-                            isHighlighted={tab.route === location.pathname}
-                            handleClick={handleClick}
-                        />
-                    ))}
+                    <FlexWrapper
+                        direction="column"
+                        align="stretch"
+                        gap="small"
+                        style={{ paddingTop: "4px" }}
+                    >
+                        {body.map((tab, tabIndex) => (
+                            <Tab
+                                key={tabIndex}
+                                icon={tab.icon}
+                                content={tab.content}
+                                route={tab.route}
+                                type="body"
+                                isHighlighted={tab.route === location.pathname}
+                                handleClick={handleClick}
+                            />
+                        ))}
+                    </FlexWrapper>
                 </FlexWrapper>
             </div>
         </FlexWrapper>

@@ -4,7 +4,7 @@ export const tabGroupStyle = recipe({
     base: {
         display: "grid",
         gridTemplateRows: "0fr",
-        transition: "grid-template-rows 0.3s ease",
+        transition: "grid-template-rows 0.3s cubic-bezier(0.2, 1, 0.2, 1)",
     },
     variants: {
         isOpen: {
