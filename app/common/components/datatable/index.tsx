@@ -11,11 +11,11 @@ import {
 } from "@tanstack/react-table"
 
 import FlexWrapper from "@/common/primitives/FlexWrapper"
-import Typography from "@/common/primitives/Typography"
 
-import TableBodyCell from "../TableBodyCell"
-import TableHeaderCell from "../TableHeaderCell"
-import { bodyColumnStyle, paginationPageStyle, tableStyle } from "./index.css"
+import PageBlock, { type PageBlockType } from "./PageBlock"
+import TableBodyCell from "./TableBodyCell"
+import TableHeaderCell from "./TableHeaderCell"
+import { bodyColumnStyle, paginationStyle, tableStyle } from "./index.css"
 
 interface DatatableProps<T> extends Omit<
     TableOptions<T>,
@@ -24,6 +24,22 @@ interface DatatableProps<T> extends Omit<
     columns: ColumnDef<T, any>[]
     data: T[]
     defaultSorting?: SortingState
+}
+
+function getPaginationItems(pageCount: number, page: number) {
+    if (pageCount <= 4) {
+        return Array.from({ length: pageCount }, (_, index) => index + 1)
+    }
+
+    if (page <= 3) {
+        return [1, 2, 3, "bridge", pageCount]
+    }
+
+    if (page >= pageCount - 2) {
+        return [1, "bridge", pageCount - 2, pageCount - 1, pageCount]
+    }
+
+    return [1, "bridge", page - 1, page, page + 1, "bridge", pageCount]
 }
 
 function Datatable<T>({
@@ -57,8 +73,27 @@ function Datatable<T>({
         column.toggleSorting()
     }
 
+    function handlePageBlockClick(type: PageBlockType, page?: number) {
+        switch (type) {
+            case "prev":
+                table.previousPage()
+                break
+            case "next":
+                table.nextPage()
+                break
+            case "page":
+                if (page !== undefined) {
+                    table.setPageIndex(page - 1)
+                }
+                break
+        }
+    }
+
+    const currentPage = table.getState().pagination.pageIndex + 1
+    const totalPages = table.getPageCount()
+
     return (
-        <FlexWrapper direction="column" align="stretch" gap="medium">
+        <FlexWrapper direction="column" align="stretch" gap="larger">
             <FlexWrapper direction="column" align="stretch">
                 <table className={tableStyle}>
                     <thead>
@@ -89,15 +124,37 @@ function Datatable<T>({
                 </table>
             </FlexWrapper>
             <FlexWrapper direction="row" justify="flex-end" align="center">
-                <FlexWrapper
-                    direction="row"
-                    justify="center"
-                    align="center"
-                    className={paginationPageStyle}
-                >
-                    <Typography font="medium-regular" color="Default">
-                        {String(table.getState().pagination.pageIndex + 1)}
-                    </Typography>
+                <FlexWrapper direction="row" align="center" className={paginationStyle}>
+                    <PageBlock
+                        type="prev"
+                        handleClick={() => handlePageBlockClick("prev")}
+                        disabled={!table.getCanPreviousPage()}
+                    />
+                    {getPaginationItems(totalPages, currentPage).map((item, index) =>
+                        item === "bridge" ? (
+                            <PageBlock
+                                key={`bridge-${index}`}
+                                type="bridge"
+                                handleClick={() => {}}
+                                disabled
+                            />
+                        ) : (
+                            <PageBlock
+                                key={`page-${item}`}
+                                type="page"
+                                page={item as number}
+                                hightlighted={item === currentPage}
+                                handleClick={() =>
+                                    handlePageBlockClick("page", item as number)
+                                }
+                            />
+                        ),
+                    )}
+                    <PageBlock
+                        type="next"
+                        handleClick={() => handlePageBlockClick("next")}
+                        disabled={!table.getCanNextPage()}
+                    />
                 </FlexWrapper>
             </FlexWrapper>
         </FlexWrapper>

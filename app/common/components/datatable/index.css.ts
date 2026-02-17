@@ -13,8 +13,7 @@ export const bodyColumnStyle = style({
     },
 })
 
-export const paginationPageStyle = style({
-    width: "32px",
-    height: "32px",
-    background: "blue",
+export const paginationStyle = style({
+    borderRadius: "4px",
+    overflow: "hidden",
 })
