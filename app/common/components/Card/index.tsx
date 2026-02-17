@@ -16,7 +16,7 @@ function Card({ title, children }: CardProps) {
                     {title}
                 </Typography>
             </FlexWrapper>
-            <FlexWrapper direction="column" padding="large" gap="medium">
+            <FlexWrapper direction="column" align="stretch" padding="larger" gap="medium">
                 {children}
             </FlexWrapper>
         </FlexWrapper>
