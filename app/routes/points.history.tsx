@@ -4,7 +4,10 @@ import { createColumnHelper } from "@tanstack/react-table"
 
 import Card from "@/common/components/Card"
 import Datatable from "@/common/components/Datatable"
+import PointChip from "@/common/components/points/PointChip"
 import { PointType } from "@/common/enum/pointType"
+import FlexWrapper from "@/common/primitives/FlexWrapper"
+import Typography from "@/common/primitives/Typography"
 
 type PointsHistoryTable = {
     id: number
@@ -44,8 +47,15 @@ function PointsHistory() {
             header: "내용",
             cell: (info) => {
                 const [type, point] = info.getValue()
-                const typeText = type === PointType.PLUS ? "상점" : "벌점"
-                return `${typeText} ${point}점`
+                return (
+                    <FlexWrapper direction="row" gap="medium" align="center">
+                        <PointChip type={type} />
+                        <Typography
+                            font="medium-regular"
+                            color="Default"
+                        >{`${point}점`}</Typography>
+                    </FlexWrapper>
+                )
             },
             filterFn: (row, columnId, filterValue) => {
                 const [type] = row.getValue(columnId) as [PointType, number]
