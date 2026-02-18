@@ -5,17 +5,49 @@ import {
     type SortingState,
     type TableOptions,
     getCoreRowModel,
+    getFilteredRowModel,
     getPaginationRowModel,
     getSortedRowModel,
     useReactTable,
 } from "@tanstack/react-table"
 
+import DropDown from "@/common/components/DropDown"
 import FlexWrapper from "@/common/primitives/FlexWrapper"
 
 import PageBlock, { type PageBlockType } from "./PageBlock"
 import TableBodyCell from "./TableBodyCell"
 import TableHeaderCell from "./TableHeaderCell"
-import { bodyColumnStyle, paginationStyle, tableStyle } from "./index.css"
+import { bodyColumnStyle, filterStyle, paginationStyle, tableStyle } from "./index.css"
+
+type FilterOption<ColumnType> = {
+    type: "option"
+    placeholder?: string
+    options: {
+        value: ColumnType
+        label: string
+    }[]
+}
+
+type FilterMultiOption<ColumnType> = {
+    type: "multiOption"
+    placeholder?: string
+    options: {
+        value: ColumnType
+        label: string
+    }[]
+}
+
+type FilterSearch = {
+    type: "search"
+    placeholder?: string
+}
+
+type Filter<T> = {
+    [columnId in keyof T]?:
+        | FilterOption<T[columnId]>
+        | FilterMultiOption<T[columnId]>
+        | FilterSearch
+}
 
 interface DatatableProps<T> extends Omit<
     TableOptions<T>,
@@ -23,6 +55,7 @@ interface DatatableProps<T> extends Omit<
 > {
     columns: ColumnDef<T, any>[]
     data: T[]
+    filters?: Filter<T>
     defaultSorting?: SortingState
 }
 
@@ -45,6 +78,7 @@ function getPaginationItems(pageCount: number, page: number) {
 function Datatable<T>({
     columns,
     data,
+    filters = {},
     defaultSorting = [],
     ...tableOptions
 }: DatatableProps<T>) {
@@ -59,6 +93,13 @@ function Datatable<T>({
         getCoreRowModel: getCoreRowModel(),
         getSortedRowModel: getSortedRowModel(),
         getPaginationRowModel: getPaginationRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
+        globalFilterFn: (row, columnId, filterValue) => {
+            const cellValue = row.getValue(columnId)
+            return String(cellValue)
+                .toLowerCase()
+                .includes(String(filterValue).toLowerCase())
+        },
         enableSortingRemoval: false,
         initialState: {
             pagination: {
@@ -94,6 +135,38 @@ function Datatable<T>({
 
     return (
         <FlexWrapper direction="column" align="stretch" gap="larger">
+            <FlexWrapper
+                direction="row"
+                align="center"
+                gap="medium"
+                padding="large"
+                className={filterStyle}
+            >
+                {table.getAllColumns().map((column, index) => {
+                    const filter = filters[column.id as keyof T]
+                    if (!filter) return null
+
+                    if (filter.type === "search") {
+                        return <></>
+                    } else if (
+                        filter.type === "option" ||
+                        filter.type === "multiOption"
+                    ) {
+                        return (
+                            <DropDown
+                                key={index}
+                                options={filter.options}
+                                value={(column.getFilterValue() as any[]) || []}
+                                onChange={(selectedValue) => {
+                                    column.setFilterValue(selectedValue)
+                                }}
+                                isMulti={filter.type === "multiOption"}
+                                placeholder={filter.placeholder}
+                            />
+                        )
+                    }
+                })}
+            </FlexWrapper>
             <FlexWrapper direction="column" align="stretch">
                 <table className={tableStyle}>
                     <thead>

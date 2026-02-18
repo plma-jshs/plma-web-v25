@@ -13,6 +13,11 @@ export const bodyColumnStyle = style({
     },
 })
 
+export const filterStyle = style({
+    background: "#e0e0e0",
+    borderRadius: "4px",
+})
+
 export const paginationStyle = style({
     borderRadius: "4px",
     overflow: "hidden",
