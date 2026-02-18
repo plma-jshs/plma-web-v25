@@ -9,8 +9,8 @@ import Typography from "@/common/primitives/Typography"
 
 type PointsViewTable = {
     stuid: number
-    grade: number
-    class: number
+    grade: 1 | 2 | 3
+    class: 1 | 2 | 3 | 4
     num: number
     name: string
     totalPlus: number
@@ -94,6 +94,48 @@ function PointsView() {
                 <Datatable
                     columns={columns}
                     data={data}
+                    filters={{
+                        grade: {
+                            type: "multiOption",
+                            placeholder: "학년",
+                            options: [
+                                {
+                                    value: 1,
+                                    label: "1학년",
+                                },
+                                {
+                                    value: 2,
+                                    label: "2학년",
+                                },
+                                {
+                                    value: 3,
+                                    label: "3학년",
+                                },
+                            ],
+                        },
+                        class: {
+                            type: "multiOption",
+                            placeholder: "반",
+                            options: [
+                                {
+                                    value: 1,
+                                    label: "1반",
+                                },
+                                {
+                                    value: 2,
+                                    label: "2반",
+                                },
+                                {
+                                    value: 3,
+                                    label: "3반",
+                                },
+                                {
+                                    value: 4,
+                                    label: "4반",
+                                },
+                            ],
+                        },
+                    }}
                     defaultSorting={[{ id: "stuid", desc: false }]}
                 />
             </FlexWrapper>
