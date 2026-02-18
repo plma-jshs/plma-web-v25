@@ -3,20 +3,13 @@ import { type Cell, flexRender } from "@tanstack/react-table"
 import FlexWrapper from "@/common/primitives/FlexWrapper"
 import Typography from "@/common/primitives/Typography"
 
-import { bodyCellStyle } from "./index.css"
-
 interface TableBodyCellProps<T> {
     cell: Cell<T, any>
 }
 
 function TableBodyCell<T>({ cell }: TableBodyCellProps<T>) {
     return (
-        <FlexWrapper
-            direction="column"
-            align="center"
-            padding="large"
-            className={bodyCellStyle}
-        >
+        <FlexWrapper direction="column" align="center" padding="large">
             {(() => {
                 if (cell.column.columnDef.meta?.isCustomCell) {
                     return flexRender(cell.column.columnDef.cell, cell.getContext())

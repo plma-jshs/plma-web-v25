@@ -5,23 +5,15 @@ import FlexWrapper from "@/common/primitives/FlexWrapper"
 import Icon from "@/common/primitives/Icon"
 import Typography from "@/common/primitives/Typography"
 
-import { headerCellStyle, moveDownButtonStyle, moveUpButtonStyle } from "./index.css"
+import { moveDownButtonStyle, moveUpButtonStyle } from "./index.css"
 
 interface TableHeaderProps<T> {
     header: Header<T, any>
-    handleHeaderCellClick: (columnId: string) => void
 }
 
-function TableHeaderCell<T>({ header, handleHeaderCellClick }: TableHeaderProps<T>) {
+function TableHeaderCell<T>({ header }: TableHeaderProps<T>) {
     return (
-        <FlexWrapper
-            direction="row"
-            justify="stretch"
-            align="center"
-            padding="medium"
-            className={headerCellStyle}
-            onClick={() => handleHeaderCellClick(header.column.id)}
-        >
+        <FlexWrapper direction="row" justify="stretch" align="center" padding="medium">
             <FlexWrapper
                 direction="column"
                 justify="center"

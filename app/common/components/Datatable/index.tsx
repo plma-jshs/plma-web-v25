@@ -17,7 +17,14 @@ import FlexWrapper from "@/common/primitives/FlexWrapper"
 import PageBlock, { type PageBlockType } from "./PageBlock"
 import TableBodyCell from "./TableBodyCell"
 import TableHeaderCell from "./TableHeaderCell"
-import { bodyColumnStyle, filterStyle, paginationStyle, tableStyle } from "./index.css"
+import {
+    bodyCellStyle,
+    bodyColumnStyle,
+    filterStyle,
+    headerCellStyle,
+    paginationStyle,
+    tableStyle,
+} from "./index.css"
 
 type FilterOption<ColumnType> = {
     type: "option"
@@ -173,11 +180,14 @@ function Datatable<T>({
                         {table.getHeaderGroups().map((headerGroup) => (
                             <tr key={headerGroup.id}>
                                 {headerGroup.headers.map((header) => (
-                                    <th key={header.id}>
-                                        <TableHeaderCell
-                                            header={header}
-                                            handleHeaderCellClick={handleHeaderCellClick}
-                                        />
+                                    <th
+                                        key={header.id}
+                                        className={headerCellStyle}
+                                        onClick={() =>
+                                            handleHeaderCellClick(header.column.id)
+                                        }
+                                    >
+                                        <TableHeaderCell header={header} />
                                     </th>
                                 ))}
                             </tr>
@@ -187,7 +197,7 @@ function Datatable<T>({
                         {table.getRowModel().rows.map((row) => (
                             <tr key={row.id} className={bodyColumnStyle}>
                                 {row.getVisibleCells().map((cell) => (
-                                    <td key={cell.id}>
+                                    <td key={cell.id} className={bodyCellStyle}>
                                         <TableBodyCell cell={cell} />
                                     </td>
                                 ))}
