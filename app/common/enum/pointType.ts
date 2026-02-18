@@ -1,5 +1,5 @@
 export enum PointType {
-    PLUS = "PLUS",
-    MINUS = "MINUS",
-    ETC = "ETC",
+    PLUS,
+    MINUS,
+    ETC,
 }
