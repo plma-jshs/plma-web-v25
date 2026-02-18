@@ -1,11 +1,15 @@
 import { style } from "@vanilla-extract/css"
 
-export const CardStyle = style({
-    border: "1px solid #ccc",
-    borderRadius: "4px",
-})
+export const CardStyle = style({})
 
 export const CardHeaderStyle = style({
     background: "#eee",
-    borderBottom: "1px solid #ccc",
+    border: "1px solid #ccc",
+    borderBottom: "none",
+    borderRadius: "4px 4px 0 0",
+})
+
+export const CardBodyStyle = style({
+    border: "1px solid #ccc",
+    borderRadius: "0 0 4px 4px",
 })

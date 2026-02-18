@@ -1,7 +1,7 @@
 import FlexWrapper from "@/common/primitives/FlexWrapper"
 import Typography from "@/common/primitives/Typography"
 
-import { CardHeaderStyle, CardStyle } from "./index.css"
+import { CardBodyStyle, CardHeaderStyle, CardStyle } from "./index.css"
 
 interface CardProps {
     title?: string
@@ -16,7 +16,13 @@ function Card({ title, children }: CardProps) {
                     {title}
                 </Typography>
             </FlexWrapper>
-            <FlexWrapper direction="column" align="stretch" padding="larger" gap="medium">
+            <FlexWrapper
+                direction="column"
+                align="stretch"
+                padding="larger"
+                gap="medium"
+                className={CardBodyStyle}
+            >
                 {children}
             </FlexWrapper>
         </FlexWrapper>
